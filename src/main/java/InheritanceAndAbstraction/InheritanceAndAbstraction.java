@@ -1,24 +1,15 @@
-package Inheritance;
+package InheritanceAndAbstraction;
 
 import java.util.ArrayList;
 
-/*class Shape {
-    private double volume;
-
-    public Shape(double volume) {
-        this.volume = volume;
-    }
-
-    public double getVolume() {
-        return volume;
-    }
+abstract class Shape {
+    public abstract double getVolume();
 }
 
-class SolidOfRevolution {
-    private double radius;
+abstract class SolidOfRevolution extends Shape {
+    protected double radius;
 
-    public SolidOfRevolution(double volume, double radius) {
-        super(volume);
+    public SolidOfRevolution(double radius) {
         this.radius = radius;
     }
 
@@ -28,8 +19,14 @@ class SolidOfRevolution {
 }
 
 class Ball extends SolidOfRevolution { // конкретный класс
+
+    @Override
+    public double getVolume() {
+        return Math.PI * Math.pow(radius, 3) * 4 / 3;
+    }
+
     public Ball(double radius) {
-        super(Math.PI * Math.pow(radius, 3) * 4 / 3, radius);
+        super(radius);
     }
 }
 
@@ -37,8 +34,13 @@ class Cylinder extends SolidOfRevolution { // конкретный класс
     private double height;
 
     public Cylinder(double radius, double height) {
-        super(Math.PI * radius * radius * height, radius);
+        super(radius);
         this.height = height;
+    }
+
+    @Override
+    public double getVolume() {
+        return Math.PI * radius * radius * height;
     }
 }
 
@@ -47,9 +49,13 @@ class Pyramid extends Shape {
     private double s; // площадь основания
 
     public Pyramid(double height, double s) {
-        super(height * s * 4 / 3);
         this.height = height;
         this.s = s;
+    }
+
+    @Override
+    public double getVolume() {
+        return height * s * 4 / 3;
     }
 }
 
@@ -57,10 +63,11 @@ class Pyramid extends Shape {
 class Box extends Shape {
     private ArrayList<Shape> shapes = new ArrayList<>();
     private double available;
+    private double volume;
 
     public Box(double available) {
-        super(available);
         this.available = available;
+        this.volume = available;
     }
 
     public boolean add(Shape shape) {
@@ -72,9 +79,14 @@ class Box extends Shape {
             return false;
         }
     }
+
+    @Override
+    public double getVolume() {
+        return volume;
+    }
 }
 
-public class Inheritance {
+public class InheritanceAndAbstraction {
 
     public static void main(String[] args) {
         Ball ball = new Ball(4.5);
@@ -86,5 +98,6 @@ public class Inheritance {
         System.out.println(box.add(ball)); // ok
         System.out.println(box.add(cylyinder)); // ok
         System.out.println(box.add(pyramid)); // failed
+
     }
-}*/
+}
